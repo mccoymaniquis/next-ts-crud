@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "../styles/globals.css";
 
 import ReactQueryProvider from "providers/react-query-provider/ReactQueryProvider";
 

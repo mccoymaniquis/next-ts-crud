@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background-color: #fff;
+}
+
+@layer components {
+  .btn {
+    @apply w-full rounded-[4px] cursor-pointer duration-150 hover:ease-in disabled:cursor-default disabled:bg-neutral-100 disabled:hover:bg-neutral-100 disabled:text-neutral-300 disabled:hover:text-neutral-300 disabled:border-neutral-100;
+  }
+  .btn-sm {
+    @apply text-[14px] px-[11.5px] py-[4px];
+  }
+  .btn-primary {
+    @apply bg-primary-300 text-neutral-white hover:bg-primary-500 focus:bg-primary-900;
+  }
+  .btn-secondary {
+    @apply bg-[#535C91] text-neutral-white hover:bg-[#211951] focus:bg-[#211951];
+  }
+  .btn-signIn {
+    @apply bg-white text-gray-800 hover:bg-gray-800 hover:text-white hover:border focus:bg-gray-800 focus:text-white focus:border;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
