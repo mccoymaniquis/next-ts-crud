@@ -32,7 +32,8 @@ request.interceptors.request.use(
     // eslint-disable-next-line no-param-reassign
     const token = Cookies.get(sessionOptions.cookieName)
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = `${token}`
+      // config.headers.Authorization = `Bearer ${token}`
     }
     return config
   },

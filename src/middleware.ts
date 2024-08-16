@@ -2,32 +2,20 @@ import type { Decoded } from '@/types/auth'
 import { NextResponse, type NextRequest } from 'next/server'
 import { jwtDecode } from 'jwt-decode'
 
-const protectedRoutes = ['/dashboard']
+const protectedRoutes = ['/', '/dashboard']
 const publicRoutes = ['/sign-in', '/sign-up']
 
 export function middleware(request: NextRequest): NextResponse<unknown> {
   // Log cookies and request URL for debugging
-  console.log('Request URL:', request.nextUrl.pathname)
-  console.log(
-    'Cookies:',
-    request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_NAME)
-  )
 
   const token = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_NAME)
 
   // Handle unauthenticated users trying to access protected routes
   if (!token && protectedRoutes.includes(request.nextUrl.pathname)) {
-    console.log('Redirecting to /sign-in because token is missing')
     return NextResponse.redirect(new URL('/sign-in', request.url))
   }
 
   if (!token) {
-    if (request.nextUrl.pathname === '/') {
-      console.log(
-        'Redirecting from / to /dashboard because user is already authenticated'
-      )
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
     return NextResponse.next()
   }
 
