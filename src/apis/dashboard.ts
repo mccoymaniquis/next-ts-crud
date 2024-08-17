@@ -23,5 +23,5 @@ export type ResultData = {
 }
 export const getDashboard = (props: dashboardProps): Promise<ResultData> => {
   const { page = 1, limit = 10 } = props
-  return request.get(`/api/v1/users/list?page=${page}&limit=${limit}`)
+  return request.get(`/api/v1/users/list`, { params: { page, limit } })
 }

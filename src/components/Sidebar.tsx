@@ -31,11 +31,8 @@ const Sidebar: FC = () => {
     deleteCookie('')
     router.push('/sign-in')
   }
-  useEffect(() => {
-    console.log(pathName)
-  }, [pathName, router])
   return (
-    <div className='h-screen w-auto px-2 bg-gray-800 text-white flex flex-col'>
+    <div className='h-auto px-2 bg-gray-800 text-white flex flex-col'>
       <div className='p-4 text-lg font-bold '>My App</div>
       <nav className='flex-1 p-2'>
         <ul>
