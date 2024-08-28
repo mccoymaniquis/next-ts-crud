@@ -47,6 +47,8 @@ const DataTable = (props: DataTableProps): ReactElement => {
   const showNextButton = currentPage !== totalPage
   const showPrevButton = currentPage !== 1
 
+  console.log(data)
+
   return (
     <>
       <div className='px-2 '>
@@ -96,52 +98,58 @@ const DataTable = (props: DataTableProps): ReactElement => {
             </tbody>
           </table>
         </div>
+        {data.length === 0 && (
+          <div className='p-4 text-[20px] font-semibold text-center'>
+            NO DATA
+          </div>
+        )}
         {isLoading && (
           <div className='flex justify-center mt-4'>
             <div className='animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900'></div>
           </div>
         )}
-        {isPagination && !isLoading && (
-          <div className='flex flex-col md:flex-row items-center justify-between mt-4'>
-            <div className=''>
-              {`Showing ${currentPage * limit - limit + 1} - 
+        {data.length === 0 ||
+          (isPagination && (
+            <div className='flex flex-col md:flex-row items-center justify-between mt-4'>
+              <div className=''>
+                {`Showing ${currentPage * limit - limit + 1} - 
                     ${
                       currentPage === totalPage
                         ? totalCount
                         : currentPage * limit
                     } 
                     of ${totalCount}`}
+              </div>
+              <div>
+                <ReactPaginate
+                  breakLabel={<div className='mr-4 mb-2'>{'...'}</div>}
+                  nextLabel={
+                    showNextButton ? (
+                      <div className='hover:bg-gray-900 w-10 h-10 pt-2 rounded-md hover:text-white text-center border-gray-900 border'>
+                        {'>'}
+                      </div>
+                    ) : null
+                  }
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={2}
+                  marginPagesDisplayed={1}
+                  pageCount={totalPage}
+                  forcePage={currentPage - 1}
+                  previousLabel={
+                    showPrevButton ? (
+                      <div className='hover:bg-gray-900 w-10 h-10 pt-2 rounded-md hover:text-white text-center border-gray-900 border mr-3'>
+                        {'<'}
+                      </div>
+                    ) : null
+                  }
+                  renderOnZeroPageCount={null}
+                  className='flex items-end justify-end text-black '
+                  pageClassName='hover:bg-gray-900 hover:text-white w-10 h-10 flex items-center justify-center rounded-md mr-3 text-[14px] font-medium border-gray-900 border'
+                  activeClassName='bg-gray-900 text-white'
+                />
+              </div>
             </div>
-            <div>
-              <ReactPaginate
-                breakLabel={<div className='mr-4 mb-2'>{'...'}</div>}
-                nextLabel={
-                  showNextButton ? (
-                    <div className='hover:bg-gray-900 w-10 h-10 pt-2 rounded-md hover:text-white text-center border-gray-900 border'>
-                      {'>'}
-                    </div>
-                  ) : null
-                }
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                pageCount={totalPage}
-                forcePage={currentPage - 1}
-                previousLabel={
-                  showPrevButton ? (
-                    <div className='hover:bg-gray-900 w-10 h-10 pt-2 rounded-md hover:text-white text-center border-gray-900 border mr-3'>
-                      {'<'}
-                    </div>
-                  ) : null
-                }
-                renderOnZeroPageCount={null}
-                className='flex items-end justify-end text-black '
-                pageClassName='hover:bg-gray-900 hover:text-white w-10 h-10 flex items-center justify-center rounded-md mr-3 text-[14px] font-medium border-gray-900 border'
-                activeClassName='bg-gray-900 text-white'
-              />
-            </div>
-          </div>
-        )}
+          ))}
       </div>
     </>
   )

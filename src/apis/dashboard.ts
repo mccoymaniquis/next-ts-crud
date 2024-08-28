@@ -1,10 +1,13 @@
 import { request } from '@/utils'
 
+import type { TableDataResponse, UserResponse } from '@/types/apis'
+
 interface dashboardProps {
   page: number
   limit: number
 }
-export type User = {
+
+interface data {
   id: number
   firstName: string
   middleName: string
@@ -12,16 +15,23 @@ export type User = {
   dateOfBirth: string
   age: number
 }
-export type TableData = {
-  data: User[]
-  totalCount: number
-  totalPage: number
-  limit: number
+
+export type result = {
+  result: string
 }
-export type ResultData = {
-  result: TableData
-}
-export const getDashboard = (props: dashboardProps): Promise<ResultData> => {
+
+export const getDashboard = (
+  props: dashboardProps
+): Promise<TableDataResponse> => {
   const { page = 1, limit = 10 } = props
   return request.get(`/api/v1/users/list`, { params: { page, limit } })
+}
+
+export const getUserById = (id: number): Promise<UserResponse> => {
+  return request.get(`/api/v1/users/list/user`, { params: { id } })
+}
+
+export const updateUser = (params: data): Promise<result> => {
+  const { id, ...rest } = params
+  return request.put(`/api/v1/users/update-user?id=${id}`, rest)
 }

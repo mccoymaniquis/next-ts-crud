@@ -10,6 +10,12 @@ export function middleware(request: NextRequest): NextResponse<unknown> {
 
   const token = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_NAME)
 
+  // if (
+  //   !publicRoutes.includes(request.nextUrl.pathname) &&
+  //   !protectedRoutes.includes(request.nextUrl.pathname)
+  // ) {
+  //   return NextResponse.redirect(new URL('/sign-in', request.url))
+  // }
   // Handle unauthenticated users trying to access protected routes
   if (!token && protectedRoutes.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/sign-in', request.url))

@@ -16,8 +16,8 @@ const Input: React.FC<InputProps> = (props: InputProps): ReactElement => {
   } = useFormContext()
 
   return (
-    <div className='flex flex-col w-full font-custom text-black'>
-      <label htmlFor={name} className='font-custom'>
+    <div className='flex flex-col w-full font-custom text-black '>
+      <label htmlFor={name} className='font-custom text-left'>
         {label}
         {required && <span className='text-red-600'> *</span>}
       </label>
@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = (props: InputProps): ReactElement => {
         {...register(name, { required: required && `${label} is required` })}
       />
       {errors[name] && (
-        <p className='text-red-600 text-[14px]'>
+        <p className='text-red-600 text-[12px] text-left'>
           {errors[name]?.message as string}
         </p>
       )}

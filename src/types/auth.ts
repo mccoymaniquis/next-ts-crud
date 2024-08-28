@@ -17,14 +17,6 @@ export type ResenOTPBody = {
   email: string
 }
 
-// export type SignInResponse = {
-//   token(
-//     NEXT_PUBLIC_COOKIE_NAME: string,
-//     token: any,
-//     arg2: { expires: number; secure: boolean; sameSite: 'Lax' }
-//   ): unknown
-// }
-
 export type SignInResponse = {
   token: string
 }

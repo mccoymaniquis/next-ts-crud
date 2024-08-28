@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { FC } from 'react'
@@ -24,43 +24,66 @@ const sidebarItems: SidebarItem[] = [
 ]
 
 const Sidebar: FC = () => {
+  const [isOpen, setIsOpen] = useState(true)
   const router = useRouter()
   const pathName = usePathname()
   const [, deleteCookie] = useCookie(process.env.NEXT_PUBLIC_COOKIE_NAME)
+
   const handleLogout = () => {
     deleteCookie('')
     router.push('/sign-in')
   }
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
-    <div className='h-auto px-2 bg-gray-800 text-white flex flex-col'>
-      <div className='p-4 text-lg font-bold '>My App</div>
-      <nav className='flex-1 p-2'>
-        <ul>
-          {sidebarItems.map((item) => (
-            <li
-              key={item.name}
-              className={`mb-2 p-2 rounded hover:bg-gray-700 ${
-                pathName === item.href ? 'bg-gray-700 ' : ''
-              }`}
-            >
-              <Link
-                href={item.href}
-                className='flex item-center justify-center'
-              >
-                {item.icon && <span className='mr-3'>{item.icon}</span>}
-                <span className='hidden md:block'>{item.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className='flex p-2 '>
+    <div className='flex flex-col'>
+      {/* Sidebar Toggle Button */}
+      <div className='bg-gray-800 flex justify-end p-2'>
         <button
-          className='flex text-white font-bold p-2 w-full rounded hover:bg-gray-700'
-          onClick={handleLogout}
+          onClick={toggleSidebar}
+          className=' text-white md:hidden flex justify-end'
         >
-          Sign out
+          {isOpen ? '[]' : '|||'}
         </button>
+      </div>
+      {/* Sidebar */}
+      <div
+        className={`h-screen bg-gray-800 text-white flex flex-col ${
+          isOpen ? 'w-24 md:w-40 lg:w-64' : 'w-0 md:w-40 lg:w-64'
+        } overflow-hidden transition-width duration-300`}
+      >
+        <span className='font-bold p-2 text-lg'>My App</span>
+        <nav className='flex-1 p-2'>
+          <ul>
+            {sidebarItems.map((item) => (
+              <li
+                key={item.name}
+                className={`mb-2 p-2 rounded hover:bg-gray-700 ${
+                  pathName === item.href ? 'bg-gray-700 ' : ''
+                }`}
+              >
+                <Link
+                  href={item.href}
+                  className='flex item-center justify-center'
+                >
+                  {item.icon && <span className='mr-3'>{item.icon}</span>}
+                  <span className='hidden md:block'>{item.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className='flex p-2 '>
+          <button
+            className='flex justify-center items-center text-white font-bold p-2 w-full rounded hover:bg-gray-700'
+            onClick={handleLogout}
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   )
